@@ -10,16 +10,25 @@ class AlcoolOuGasolina extends StatefulWidget {
 
 class _AlcoolOuGasolinaState extends State<AlcoolOuGasolina> {
   TextEditingController _textEditingControllerAlcool = TextEditingController();
-  TextEditingController _textEditingControllerGasolina =
-      TextEditingController();
-  String _textoResultado = '';
 
   calcular(String inputTextA, String inputTextG) {
     //method parse(inputTextA) does the same thing, but less safe.
     //[source].parse("invalid arg")
+    String temp = "";
 
     double precoAlcool = double.tryParse(inputTextA);
     double precoGasolina = double.tryParse(inputTextG);
+    if (precoAlcool == null || precoGasolina == null) {
+      temp = "Preço nulo";
+    } else {
+
+      precoAlcool / precoGasolina >= 0.7
+          ? temp = 'Compra Gasolina!'
+          : temp = 'Compra Alcool!';
+    }
+    setState(() {
+      _textoResultado = temp;
+    });
     print(precoAlcool.runtimeType);
     print(inputTextG);
 /*    If the [source] string is not a valid double literal, the [onError]
@@ -30,14 +39,21 @@ class _AlcoolOuGasolinaState extends State<AlcoolOuGasolina> {
     * The [onError] function is only invoked if [source] is a [String] with an
     * invalid format. It is not invoked if [source] is `null`.*/
     //with tryParse("invalid arg") it returns null allways.
-    String temp = "";
-    precoAlcool > precoGasolina ? temp = 'Compra Gasolina!' : temp = 'Compra Gasoleo!';
-
-    setState(() {
-      _textoResultado = temp;
-    });
     print(_textoResultado);
+
+    _limparCampos();
   }
+
+  void _limparCampos(){
+    //quando é utilizado diretamente o TextEditingControler o metodo serState((){}) é chamado automaticamente não sendo necessario asua utilização para que o feito surja na view
+    _textEditingControllerAlcool.text = "";
+    _textEditingControllerGasolina.text = "";
+  }
+
+  TextEditingController _textEditingControllerGasolina =
+      TextEditingController();
+
+  String _textoResultado = '';
 
   @override
   Widget build(BuildContext context) {
