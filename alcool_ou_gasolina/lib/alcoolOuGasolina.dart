@@ -30,12 +30,13 @@ class _AlcoolOuGasolinaState extends State<AlcoolOuGasolina> {
     * The [onError] function is only invoked if [source] is a [String] with an
     * invalid format. It is not invoked if [source] is `null`.*/
     //with tryParse("invalid arg") it returns null allways.
-String temp = "";
-    precoAlcool > precoGasolina ? temp = 'Compra Gasolina!' : 'Compra Gasoleo!';
+    String temp = "";
+    precoAlcool > precoGasolina ? temp = 'Compra Gasolina!' : temp = 'Compra Gasoleo!';
 
     setState(() {
       _textoResultado = temp;
     });
+    print(_textoResultado);
   }
 
   @override
@@ -89,14 +90,12 @@ String temp = "";
                   ),
                   controller: _textEditingControllerGasolina,
                 ),
-                RaisedButton(
+                ElevatedButton(
                   child: Text(
                     "Calcular",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
-                  textColor: Colors.white,
-                  color: Colors.blue,
-                  padding: EdgeInsets.all(15),
+                  //EdgeInsets.all(20)
                   onPressed: () {
                     calcular(_textEditingControllerAlcool.text,
                         _textEditingControllerGasolina.text);
